@@ -1,9 +1,14 @@
 package com.training.cabinvoicegeneration;
 
+import com.training.cabinvoicegenerator.CabEnhancedBill;
 import com.training.cabinvoicegenerator.CabInvoiceGenerator;
 import com.training.cabinvoicegenerator.CabRides;
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class CabInvoiceTest {
 
@@ -33,4 +38,18 @@ public class CabInvoiceTest {
         CabInvoiceGenerator cab = new CabInvoiceGenerator();
         Assert.assertEquals(310,cab.getFare(rides),0.0);
     }
+
+    @Test
+    public void givenMultipleRides_ShouldReturnEnhancedInvoice(){
+        CabRides[] rides = {
+                new CabRides(10,5) ,
+                new CabRides(20,5),
+                new CabRides(30,5)
+        };
+        CabInvoiceGenerator cab = new CabInvoiceGenerator();
+        cab.getEnhanceInvoice(rides);
+        CabEnhancedBill cabBill = new CabEnhancedBill(3,615,205);
+        Assert.assertEquals(cabBill,cab.getEnhanceInvoice(rides));
+    }
+
 }
