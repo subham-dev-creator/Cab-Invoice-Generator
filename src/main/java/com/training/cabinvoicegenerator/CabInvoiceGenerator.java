@@ -9,23 +9,24 @@ public class CabInvoiceGenerator {
     private static double MIN_FARE = 5;
 
     // Returns Fare For A Ride (Distance And Time Given)
-    public double getFare(double Distance, int Time){
+    public static double getFare(double Distance, int Time){
         double fare = COST_PER_KILOMETER*Distance + COST_PER_MINUTE*Time;
         return fare>MIN_FARE ? fare : MIN_FARE;
     }
 
     // Returns Total Fare Of Multiple Rides
-    public double getFare(CabRides[] cabrides){
+    public static double getFare(ArrayList<CabRides> cabrides){
         int fare = 0;
         for(CabRides cab : cabrides){
-            fare+=getFare(cab.distance,cab.time);
+            fare+=cab.fare;
         }
+        System.out.println("Fare Is : " + fare);
         return fare;
     }
 
     // Returns CabEnhancedBill Object
-    public CabEnhancedBill getEnhanceInvoice(CabRides[] rides) {
-        int numOfRides = rides.length;
+    public static CabEnhancedBill getEnhanceInvoice(ArrayList<CabRides> rides) {
+        int numOfRides = rides.size();
         double totalFare = getFare(rides);
         double avgFare = totalFare/numOfRides;
         CabEnhancedBill cb = new CabEnhancedBill(numOfRides,totalFare,avgFare);

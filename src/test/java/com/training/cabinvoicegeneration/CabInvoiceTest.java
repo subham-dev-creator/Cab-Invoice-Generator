@@ -3,6 +3,7 @@ package com.training.cabinvoicegeneration;
 import com.training.cabinvoicegenerator.CabEnhancedBill;
 import com.training.cabinvoicegenerator.CabInvoiceGenerator;
 import com.training.cabinvoicegenerator.CabRides;
+import com.training.cabinvoicegenerator.RideRepository;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -31,25 +32,44 @@ public class CabInvoiceTest {
 
     @Test
     public void givenMultipleDistanceAndTime_ShouldReturnFare(){
-        CabRides[] rides = {
-                new CabRides(10,5) ,
-                new CabRides(20,5)
+        ArrayList<CabRides> rides = new ArrayList<CabRides>(){
+            {
+                add(new CabRides(1,5)) ;
+                add(new CabRides(2,5));
+            }
         };
         CabInvoiceGenerator cab = new CabInvoiceGenerator();
-        Assert.assertEquals(310,cab.getFare(rides),0.0);
+        Assert.assertEquals(40.0,cab.getFare(rides),0.0);
     }
 
     @Test
     public void givenMultipleRides_ShouldReturnEnhancedInvoice(){
-        CabRides[] rides = {
-                new CabRides(10,5) ,
-                new CabRides(20,5),
-                new CabRides(30,5)
+        ArrayList<CabRides> rides = new ArrayList<CabRides>() {
+            {
+                add(new CabRides(1, 10));
+                add(new CabRides(2, 20));
+                add(new CabRides(3, 30));
+            }
         };
         CabInvoiceGenerator cab = new CabInvoiceGenerator();
-        cab.getEnhanceInvoice(rides);
-        CabEnhancedBill cabBill = new CabEnhancedBill(3,615,205);
-        Assert.assertEquals(cabBill,cab.getEnhanceInvoice(rides));
+        CabEnhancedBill cabBill = new CabEnhancedBill(3,120,40);
+        Assert.assertTrue(cabBill.equals(cab.getEnhanceInvoice(rides)));
     }
+
+    @Test
+    public void givenUserId_ShouldReturnListOfRidesInvoice(){
+        RideRepository rider = new RideRepository(1);
+        CabRides[] rides = {
+                new CabRides(1,10) ,
+                new CabRides(2,20),
+                new CabRides(3,30)
+        };
+
+        rider.addRide(4,40);
+        rider.addRide(rides);
+        rider.getInvoices();
+        Assert.assertEquals(4,rider.getNumOfRides());
+    }
+
 
 }
