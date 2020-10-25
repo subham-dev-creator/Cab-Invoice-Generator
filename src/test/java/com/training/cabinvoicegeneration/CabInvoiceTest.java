@@ -19,7 +19,7 @@ public class CabInvoiceTest {
         CabInvoiceGenerator cab = new CabInvoiceGenerator();
         double distance = 10;
         int time = 5;
-        Assert.assertEquals(105,cab.getFare(distance,time),0.0);
+        Assert.assertEquals(105,cab.getNormalFare(distance,time),0.0);
     }
 
     @Test
@@ -27,7 +27,7 @@ public class CabInvoiceTest {
         CabInvoiceGenerator cab = new CabInvoiceGenerator();
         double distance = 0;
         int time = 0;
-        Assert.assertEquals(5,cab.getFare(distance,time),0.0);
+        Assert.assertEquals(5,cab.getNormalFare(distance,time),0.0);
     }
 
     @Test
@@ -39,7 +39,7 @@ public class CabInvoiceTest {
             }
         };
         CabInvoiceGenerator cab = new CabInvoiceGenerator();
-        Assert.assertEquals(40.0,cab.getFare(rides),0.0);
+        Assert.assertEquals(40.0,cab.getNormalFare(rides),0.0);
     }
 
     @Test
@@ -69,6 +69,14 @@ public class CabInvoiceTest {
         rider.addRide(rides);
         rider.getInvoices();
         Assert.assertEquals(4,rider.getNumOfRides());
+    }
+
+    @Test
+    public void givenDistanceAndTime_ShouldReturnPremiumFare(){
+        CabInvoiceGenerator cab = new CabInvoiceGenerator();
+        double distance = 10;
+        int time = 5;
+        Assert.assertEquals(160.0,cab.getPermiumFare(distance,time),0.0);
     }
 
 

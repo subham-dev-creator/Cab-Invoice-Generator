@@ -1,6 +1,6 @@
 package com.training.cabinvoicegenerator;
 
-import static com.training.cabinvoicegenerator.CabInvoiceGenerator.getFare;
+import static com.training.cabinvoicegenerator.CabInvoiceGenerator.*;
 
 public class CabRides {
     double distance;
@@ -10,7 +10,7 @@ public class CabRides {
     public CabRides(double distance, int time) {
         this.distance = distance;
         this.time = time;
-        this.fare=getFare(this.distance,this.time);
+        this.fare=getNormalFare(this.distance,this.time);
     }
 
     public double getDistance() {
